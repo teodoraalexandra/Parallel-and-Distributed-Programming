@@ -1,8 +1,14 @@
 package controller;
 
 import model.MatrixMultiplication;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 public class PatternController {
@@ -22,7 +28,7 @@ public class PatternController {
         this.endTime = 0;
     }
 
-    public void lowLevelPattern1() throws InterruptedException {
+    public void lowLevelPattern1() throws InterruptedException, IOException {
         MatrixMultiplication matrixMultiplication = new MatrixMultiplication(a, b, size, numberOfThreads);
         startTime = System.currentTimeMillis();
 
@@ -39,7 +45,7 @@ public class PatternController {
         }
 
         endTime = System.currentTimeMillis();
-        System.out.println("LOW LEVEL PATTERN 1: " + (endTime - startTime) +
+        writeToFile("LOW LEVEL PATTERN 1: " + (endTime - startTime) +
                 "; SIZE: " + size + "; THREADS: " + numberOfThreads + "\n");
 
         // "reset" timer
@@ -47,7 +53,7 @@ public class PatternController {
         endTime = 0;
     }
 
-    public void lowLevelPattern2() throws InterruptedException {
+    public void lowLevelPattern2() throws InterruptedException, IOException {
         MatrixMultiplication matrixMultiplication = new MatrixMultiplication(a, b, size, numberOfThreads);
         startTime = System.currentTimeMillis();
 
@@ -64,7 +70,7 @@ public class PatternController {
         }
 
         endTime = System.currentTimeMillis();
-        System.out.println("LOW LEVEL PATTERN 2: " + (endTime - startTime) +
+        writeToFile("LOW LEVEL PATTERN 2: " + (endTime - startTime) +
                 "; SIZE: " + size + "; THREADS: " + numberOfThreads + "\n");
 
         // "reset" timer
@@ -72,7 +78,7 @@ public class PatternController {
         endTime = 0;
     }
 
-    public void lowLevelPattern3() throws InterruptedException {
+    public void lowLevelPattern3() throws InterruptedException, IOException {
         MatrixMultiplication matrixMultiplication = new MatrixMultiplication(a, b, size, numberOfThreads);
         startTime = System.currentTimeMillis();
 
@@ -89,11 +95,73 @@ public class PatternController {
         }
 
         endTime = System.currentTimeMillis();
-        System.out.println("LOW LEVEL PATTERN 3: " + (endTime - startTime) +
+        writeToFile("LOW LEVEL PATTERN 3: " + (endTime - startTime) +
                 "; SIZE: " + size + "; THREADS: " + numberOfThreads + "\n");
 
         // "reset" timer
         startTime = 0;
         endTime = 0;
+    }
+
+    public void threadPoolPattern1() throws IOException {
+        MatrixMultiplication matrixMultiplication = new MatrixMultiplication(a, b, size, numberOfThreads);
+        ExecutorService executorService = Executors.newFixedThreadPool(numberOfThreads);
+
+        startTime = System.currentTimeMillis();
+        executorService.execute(matrixMultiplication.pattern_1);
+        endTime = System.currentTimeMillis();
+
+        writeToFile("THREAD POOL PATTERN 1: " + (endTime - startTime) +
+                "; SIZE: " + size + "; THREADS: " + numberOfThreads + "\n");
+
+        // "reset" timer
+        startTime = 0;
+        endTime = 0;
+
+        executorService.shutdown();
+    }
+
+    public void threadPoolPattern2() throws IOException {
+        MatrixMultiplication matrixMultiplication = new MatrixMultiplication(a, b, size, numberOfThreads);
+        ExecutorService executorService = Executors.newFixedThreadPool(numberOfThreads);
+
+        startTime = System.currentTimeMillis();
+        executorService.execute(matrixMultiplication.pattern_2);
+        endTime = System.currentTimeMillis();
+
+        writeToFile("THREAD POOL PATTERN 2: " + (endTime - startTime) +
+                "; SIZE: " + size + "; THREADS: " + numberOfThreads + "\n");
+
+        // "reset" timer
+        startTime = 0;
+        endTime = 0;
+
+        executorService.shutdown();
+    }
+
+    public void threadPoolPattern3() throws IOException {
+        MatrixMultiplication matrixMultiplication = new MatrixMultiplication(a, b, size, numberOfThreads);
+        ExecutorService executorService = Executors.newFixedThreadPool(numberOfThreads);
+
+        startTime = System.currentTimeMillis();
+        executorService.execute(matrixMultiplication.pattern_3);
+        endTime = System.currentTimeMillis();
+
+        writeToFile("THREAD POOL PATTERN 3: " + (endTime - startTime) +
+                "; SIZE: " + size + "; THREADS: " + numberOfThreads + "\n\n");
+
+        // "reset" timer
+        startTime = 0;
+        endTime = 0;
+
+        executorService.shutdown();
+    }
+
+    private void writeToFile(String text) throws IOException {
+        BufferedWriter writer = new BufferedWriter(
+                new FileWriter("/Users/teodoradan/Desktop/Parallel-and-Distributed-Programming/Lab3/src/report", true));
+
+        writer.write(text);
+        writer.close();
     }
 }

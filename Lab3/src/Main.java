@@ -1,14 +1,16 @@
 import controller.PatternController;
 
+import java.io.IOException;
+
 
 public class Main {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, IOException {
         // Necessary parameters
         int min = 1;
         int max = 10;
-        int SIZE_OF_MATRIX = 10;
-        int NUMBER_OF_THREADS = 4;
+        int SIZE_OF_MATRIX = 100;
+        int NUMBER_OF_THREADS = 5;
 
         // Generate 2 random matrices
         int[][] a = new int[SIZE_OF_MATRIX][SIZE_OF_MATRIX];
@@ -32,6 +34,14 @@ public class Main {
         // PATTERN 3 - LOW LEVEL
         patternController.lowLevelPattern3();
 
+        // PATTERN 1 - THREAD POOL
+        patternController.threadPoolPattern1();
+
+        // PATTERN 2 - THREAD POOL
+        patternController.threadPoolPattern2();
+
+        // PATTERN 3 - THREAD POOL
+        patternController.threadPoolPattern3();
     }
 
 }
