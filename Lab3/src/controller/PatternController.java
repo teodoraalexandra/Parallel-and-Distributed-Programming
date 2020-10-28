@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 
 public class PatternController {
@@ -103,12 +104,14 @@ public class PatternController {
         endTime = 0;
     }
 
-    public void threadPoolPattern1() throws IOException {
+    public void threadPoolPattern1() throws IOException, InterruptedException {
         MatrixMultiplication matrixMultiplication = new MatrixMultiplication(a, b, size, numberOfThreads);
         ExecutorService executorService = Executors.newFixedThreadPool(numberOfThreads);
 
         startTime = System.currentTimeMillis();
         executorService.execute(matrixMultiplication.pattern_1);
+        executorService.shutdown();
+        executorService.awaitTermination(1, TimeUnit.MINUTES);
         endTime = System.currentTimeMillis();
 
         writeToFile("THREAD POOL PATTERN 1: " + (endTime - startTime) +
@@ -117,16 +120,16 @@ public class PatternController {
         // "reset" timer
         startTime = 0;
         endTime = 0;
-
-        executorService.shutdown();
     }
 
-    public void threadPoolPattern2() throws IOException {
+    public void threadPoolPattern2() throws IOException, InterruptedException {
         MatrixMultiplication matrixMultiplication = new MatrixMultiplication(a, b, size, numberOfThreads);
         ExecutorService executorService = Executors.newFixedThreadPool(numberOfThreads);
 
         startTime = System.currentTimeMillis();
         executorService.execute(matrixMultiplication.pattern_2);
+        executorService.shutdown();
+        executorService.awaitTermination(1, TimeUnit.MINUTES);
         endTime = System.currentTimeMillis();
 
         writeToFile("THREAD POOL PATTERN 2: " + (endTime - startTime) +
@@ -135,16 +138,16 @@ public class PatternController {
         // "reset" timer
         startTime = 0;
         endTime = 0;
-
-        executorService.shutdown();
     }
 
-    public void threadPoolPattern3() throws IOException {
+    public void threadPoolPattern3() throws IOException, InterruptedException {
         MatrixMultiplication matrixMultiplication = new MatrixMultiplication(a, b, size, numberOfThreads);
         ExecutorService executorService = Executors.newFixedThreadPool(numberOfThreads);
 
         startTime = System.currentTimeMillis();
         executorService.execute(matrixMultiplication.pattern_3);
+        executorService.shutdown();
+        executorService.awaitTermination(1, TimeUnit.MINUTES);
         endTime = System.currentTimeMillis();
 
         writeToFile("THREAD POOL PATTERN 3: " + (endTime - startTime) +
@@ -153,8 +156,6 @@ public class PatternController {
         // "reset" timer
         startTime = 0;
         endTime = 0;
-
-        executorService.shutdown();
     }
 
     private void writeToFile(String text) throws IOException {

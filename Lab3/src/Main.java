@@ -9,8 +9,8 @@ public class Main {
         // Necessary parameters
         int min = 1;
         int max = 10;
-        int SIZE_OF_MATRIX = 100;
-        int NUMBER_OF_THREADS = 5;
+        int SIZE_OF_MATRIX = 1000;
+        int NUMBER_OF_THREADS = 10;
 
         // Generate 2 random matrices
         int[][] a = new int[SIZE_OF_MATRIX][SIZE_OF_MATRIX];
