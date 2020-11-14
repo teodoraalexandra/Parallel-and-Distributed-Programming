@@ -1,0 +1,113 @@
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading;
+using Lab4.domain;
+using Lab4.parser;
+
+namespace Lab4.tpl
+{
+    public static class Callbacks
+    {
+        private static List<string> hosts;
+
+        public static void Run(List<string> hostnames) {
+            hosts = hostnames;
+
+            for (var i = 0; i < hosts.Count; i++) {
+                DoStart(i);
+                Thread.Sleep(1000);
+            }
+        }
+
+        private static void DoStart(object idObject) {
+            var id = (int) idObject;
+
+            StartClient(hosts[id], id);
+        }
+
+        private static void StartClient(string host, int id) {
+            var ipHostInfo = Dns.GetHostEntry(host.Split('/')[0]);
+            var ipAddress = ipHostInfo.AddressList[0];
+            var remoteEndpoint = new IPEndPoint(ipAddress, Parser.HttpPort);
+            
+            var client = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+
+            var state = new State {
+                Socket = client,
+                Hostname = host.Split('/')[0],
+                Endpoint = host.Contains("/") ? host.Substring(host.IndexOf("/", StringComparison.Ordinal)) : "",
+                RemoteEndpoint = remoteEndpoint,
+                Id = id
+            };
+             
+            state.Socket.BeginConnect(state.RemoteEndpoint, Connected, state);
+        }
+
+        private static void Connected(IAsyncResult ar) {
+            var state = (State) ar.AsyncState;
+            if (state == null) return;
+            var clientSocket = state.Socket;
+            var clientId = state.Id;
+            var hostname = state.Hostname;
+ 
+            clientSocket.EndConnect(ar);
+            Console.WriteLine(clientId + " is connected to " + hostname + " " + clientSocket.RemoteEndPoint);
+                
+            // First, we have to convert string to bytes 
+            var byteData = Encoding.ASCII.GetBytes(Parser.GetRequestString(state.Hostname, state.Endpoint));
+                
+            state.Socket.BeginSend(byteData, 0, byteData.Length, 0, Sent, state);
+        }
+
+        private static void Sent(IAsyncResult ar) {
+            var state = (State) ar.AsyncState;
+            if (state == null) return;
+            var clientSocket = state.Socket;
+            var clientId = state.Id;
+
+            var bytesSent = clientSocket.EndSend(ar);
+            Console.WriteLine(clientId + " has sent " + bytesSent + " bytes to server.");
+                
+            state.Socket.BeginReceive(state.Buffer, 0, State.BufferSize, 0, Receiving, state);
+        }
+
+        private static void Receiving(IAsyncResult ar) {
+            var state = (State) ar.AsyncState;
+            if (state == null) return;
+            var clientSocket = state.Socket;
+            var clientId = state.Id;
+
+            try {  
+                var bytesRead = clientSocket.EndReceive(ar);
+                
+                state.ResponseContent.Append(Encoding.ASCII.GetString(state.Buffer, 0, bytesRead));
+
+                // If the response header has not been fully obtained, get the next chunk of data
+                if (!Parser.ReceiveFullHeader(state.ResponseContent.ToString())) {
+                    clientSocket.BeginReceive(state.Buffer, 0, State.BufferSize, 0, Receiving, state);
+                } else {
+                    // Header has been fully obtained, so we can get the body
+                    var responseBody = Parser.GetResponseBody(state.ResponseContent.ToString());
+                    
+                    // When we get the Content-Length, we know how much data we should receive
+                    // If we got less data, the BeginReceive must be called again
+                    var contentLengthHeaderValue = Parser.GetContentLength(state.ResponseContent.ToString());
+                    if (responseBody.Length < contentLengthHeaderValue) {
+                        clientSocket.BeginReceive(state.Buffer, 0, State.BufferSize, 0, Receiving, state);
+                    } else {
+                        Console.WriteLine(clientId + " received: " + responseBody.Length + " chars (body)");
+                        Console.WriteLine(Parser.GetResponseHeader(state.ResponseContent.ToString()) + "\n\n");
+
+                        clientSocket.Shutdown(SocketShutdown.Both);
+                        clientSocket.Close();
+                    }
+                }
+            } catch (Exception e) {
+                Console.WriteLine(e.ToString());
+            }
+        }
+    }
+}

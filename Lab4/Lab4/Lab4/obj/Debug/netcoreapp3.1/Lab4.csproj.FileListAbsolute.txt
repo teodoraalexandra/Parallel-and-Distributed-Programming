@@ -1,0 +1,12 @@
+/Users/teodoradan/Desktop/Parallel-and-Distributed-Programming/Lab4/Lab4/Lab4/bin/Debug/netcoreapp3.1/Lab4.deps.json
+/Users/teodoradan/Desktop/Parallel-and-Distributed-Programming/Lab4/Lab4/Lab4/bin/Debug/netcoreapp3.1/Lab4.runtimeconfig.json
+/Users/teodoradan/Desktop/Parallel-and-Distributed-Programming/Lab4/Lab4/Lab4/bin/Debug/netcoreapp3.1/Lab4.runtimeconfig.dev.json
+/Users/teodoradan/Desktop/Parallel-and-Distributed-Programming/Lab4/Lab4/Lab4/bin/Debug/netcoreapp3.1/Lab4.dll
+/Users/teodoradan/Desktop/Parallel-and-Distributed-Programming/Lab4/Lab4/Lab4/bin/Debug/netcoreapp3.1/Lab4.pdb
+/Users/teodoradan/Desktop/Parallel-and-Distributed-Programming/Lab4/Lab4/Lab4/obj/Debug/netcoreapp3.1/Lab4.csprojAssemblyReference.cache
+/Users/teodoradan/Desktop/Parallel-and-Distributed-Programming/Lab4/Lab4/Lab4/obj/Debug/netcoreapp3.1/Lab4.AssemblyInfoInputs.cache
+/Users/teodoradan/Desktop/Parallel-and-Distributed-Programming/Lab4/Lab4/Lab4/obj/Debug/netcoreapp3.1/Lab4.AssemblyInfo.cs
+/Users/teodoradan/Desktop/Parallel-and-Distributed-Programming/Lab4/Lab4/Lab4/obj/Debug/netcoreapp3.1/Lab4.csproj.CoreCompileInputs.cache
+/Users/teodoradan/Desktop/Parallel-and-Distributed-Programming/Lab4/Lab4/Lab4/obj/Debug/netcoreapp3.1/Lab4.dll
+/Users/teodoradan/Desktop/Parallel-and-Distributed-Programming/Lab4/Lab4/Lab4/obj/Debug/netcoreapp3.1/Lab4.pdb
+/Users/teodoradan/Desktop/Parallel-and-Distributed-Programming/Lab4/Lab4/Lab4/obj/Debug/netcoreapp3.1/Lab4.genruntimeconfig.cache

@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="download\download.txt" />
+      <None Remove="download\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="download\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="download\**" />
+    </ItemGroup>
+
+</Project>
