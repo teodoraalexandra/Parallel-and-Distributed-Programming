@@ -22,7 +22,17 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3fabe9a-dcc0-43a3-b74e-43548d455128" name="Default Changelist" comment="" />
+    <list default="true" id="f3fabe9a-dcc0-43a3-b74e-43548d455128" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Lab4/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Lab4/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab4/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab4/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab4/bin/Debug/netcoreapp3.1/Lab4.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Lab4/bin/Debug/netcoreapp3.1/Lab4.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab4/bin/Debug/netcoreapp3.1/Lab4.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Lab4/bin/Debug/netcoreapp3.1/Lab4.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab4/domain/State.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab4/domain/State.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab4/obj/Debug/netcoreapp3.1/Lab4.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Lab4/obj/Debug/netcoreapp3.1/Lab4.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab4/obj/Debug/netcoreapp3.1/Lab4.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Lab4/obj/Debug/netcoreapp3.1/Lab4.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab4/tpl/Async.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab4/tpl/Async.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab4/tpl/TaskMechanism.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab4/tpl/TaskMechanism.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -41,12 +51,12 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Lab4/tpl/Async.cs" />
-        <option value="$PROJECT_DIR$/Lab4/tpl/TaskMechanism.cs" />
-        <option value="$PROJECT_DIR$/Lab4/domain/State.cs" />
         <option value="$PROJECT_DIR$/Lab4/download/download.html" />
-        <option value="$PROJECT_DIR$/Lab4/tpl/Callbacks.cs" />
         <option value="$PROJECT_DIR$/Lab4/parser/Parser.cs" />
+        <option value="$PROJECT_DIR$/Lab4/tpl/Callbacks.cs" />
+        <option value="$PROJECT_DIR$/Lab4/tpl/Async.cs" />
+        <option value="$PROJECT_DIR$/Lab4/domain/State.cs" />
+        <option value="$PROJECT_DIR$/Lab4/tpl/TaskMechanism.cs" />
         <option value="$PROJECT_DIR$/Lab4/Program.cs" />
       </list>
     </option>
@@ -64,7 +74,8 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="CodeLensConfigurable" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager">
@@ -97,7 +108,7 @@
       <updated>1605020003399</updated>
       <workItem from="1605020011838" duration="23325000" />
       <workItem from="1605099931471" duration="215000" />
-      <workItem from="1605346800813" duration="5109000" />
+      <workItem from="1605346800813" duration="9479000" />
     </task>
     <servers />
   </component>
@@ -122,22 +133,26 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1238" height="185" key="GridCell.Tab.0.bottom" timestamp="1605352719432">
-      <screen x="0" y="23" width="1280" height="709" />
+    <state width="1238" height="491" key="GridCell.Tab.0.bottom" timestamp="1605365901278">
+      <screen x="0" y="23" width="1280" height="712" />
     </state>
-    <state width="1238" height="185" key="GridCell.Tab.0.bottom/0.23.1280.709@0.23.1280.709" timestamp="1605352719432" />
-    <state width="1238" height="185" key="GridCell.Tab.0.center" timestamp="1605352719395">
-      <screen x="0" y="23" width="1280" height="709" />
+    <state width="1238" height="493" key="GridCell.Tab.0.bottom/0.23.1280.709@0.23.1280.709" timestamp="1605352949110" />
+    <state width="1238" height="491" key="GridCell.Tab.0.bottom/0.23.1280.712@0.23.1280.712" timestamp="1605365901278" />
+    <state width="1238" height="491" key="GridCell.Tab.0.center" timestamp="1605365901277">
+      <screen x="0" y="23" width="1280" height="712" />
     </state>
-    <state width="1238" height="185" key="GridCell.Tab.0.center/0.23.1280.709@0.23.1280.709" timestamp="1605352719395" />
-    <state width="1238" height="185" key="GridCell.Tab.0.left" timestamp="1605352719373">
-      <screen x="0" y="23" width="1280" height="709" />
+    <state width="1238" height="493" key="GridCell.Tab.0.center/0.23.1280.709@0.23.1280.709" timestamp="1605352949109" />
+    <state width="1238" height="491" key="GridCell.Tab.0.center/0.23.1280.712@0.23.1280.712" timestamp="1605365901277" />
+    <state width="1238" height="491" key="GridCell.Tab.0.left" timestamp="1605365901276">
+      <screen x="0" y="23" width="1280" height="712" />
     </state>
-    <state width="1238" height="185" key="GridCell.Tab.0.left/0.23.1280.709@0.23.1280.709" timestamp="1605352719373" />
-    <state width="1238" height="185" key="GridCell.Tab.0.right" timestamp="1605352719417">
-      <screen x="0" y="23" width="1280" height="709" />
+    <state width="1238" height="493" key="GridCell.Tab.0.left/0.23.1280.709@0.23.1280.709" timestamp="1605352949108" />
+    <state width="1238" height="491" key="GridCell.Tab.0.left/0.23.1280.712@0.23.1280.712" timestamp="1605365901276" />
+    <state width="1238" height="491" key="GridCell.Tab.0.right" timestamp="1605365901277">
+      <screen x="0" y="23" width="1280" height="712" />
     </state>
-    <state width="1238" height="185" key="GridCell.Tab.0.right/0.23.1280.709@0.23.1280.709" timestamp="1605352719417" />
+    <state width="1238" height="493" key="GridCell.Tab.0.right/0.23.1280.709@0.23.1280.709" timestamp="1605352949109" />
+    <state width="1238" height="491" key="GridCell.Tab.0.right/0.23.1280.712@0.23.1280.712" timestamp="1605365901277" />
     <state width="1238" height="245" key="GridCell.Tab.1.bottom" timestamp="1605097617968">
       <screen x="0" y="23" width="1280" height="709" />
     </state>
@@ -202,13 +217,19 @@
       <screen x="0" y="23" width="1280" height="709" />
     </state>
     <state width="1238" height="245" key="GridCell.Tab.4.right/0.23.1280.709@0.23.1280.709" timestamp="1605097617971" />
-    <state x="141" y="23" width="997" height="709" key="SettingsEditor" timestamp="1605038316219">
-      <screen x="0" y="23" width="1280" height="709" />
+    <state x="141" y="23" width="997" height="709" key="SettingsEditor" timestamp="1605365523873">
+      <screen x="0" y="23" width="1280" height="712" />
     </state>
     <state x="141" y="23" width="997" height="709" key="SettingsEditor/0.23.1280.709@0.23.1280.709" timestamp="1605038316219" />
-    <state x="305" y="56" width="670" height="676" key="search.everywhere.popup" timestamp="1605039138032">
-      <screen x="0" y="23" width="1280" height="709" />
+    <state x="141" y="23" key="SettingsEditor/0.23.1280.712@0.23.1280.712" timestamp="1605365523873" />
+    <state x="100" y="123" width="1080" height="508" key="VCS.FileHistoryDialog" timestamp="1605365715192">
+      <screen x="0" y="23" width="1280" height="712" />
+    </state>
+    <state x="100" y="123" width="1080" height="508" key="VCS.FileHistoryDialog/0.23.1280.712@0.23.1280.712" timestamp="1605365715192" />
+    <state x="305" y="56" width="670" height="679" key="search.everywhere.popup" timestamp="1605364130562">
+      <screen x="0" y="23" width="1280" height="712" />
     </state>
     <state x="305" y="56" width="670" height="676" key="search.everywhere.popup/0.23.1280.709@0.23.1280.709" timestamp="1605039138032" />
+    <state x="305" y="56" width="670" height="679" key="search.everywhere.popup/0.23.1280.712@0.23.1280.712" timestamp="1605364130562" />
   </component>
 </project>
