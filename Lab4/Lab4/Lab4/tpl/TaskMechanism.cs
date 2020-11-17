@@ -141,6 +141,9 @@ namespace Lab4.tpl
                         Console.WriteLine(clientId + " received: " + responseBody.Length + " chars (body)");
                         Console.WriteLine(Parser.GetResponseHeader(state.ResponseContent.ToString()) + "\n\n");
 
+                        foreach (var i in Parser.GetResponseBody(state.ResponseContent.ToString()).Split('\r', '\n'))
+                            Console.WriteLine(i);
+                        
                         // Signal that the receive is done 
                         state.ReceiveMutex.Set();
                     }
