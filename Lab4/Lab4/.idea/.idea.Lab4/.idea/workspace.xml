@@ -27,11 +27,10 @@
       <change beforePath="$PROJECT_DIR$/Lab4/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab4/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Lab4/bin/Debug/netcoreapp3.1/Lab4.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Lab4/bin/Debug/netcoreapp3.1/Lab4.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Lab4/bin/Debug/netcoreapp3.1/Lab4.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Lab4/bin/Debug/netcoreapp3.1/Lab4.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab4/domain/State.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab4/domain/State.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Lab4/obj/Debug/netcoreapp3.1/Lab4.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Lab4/obj/Debug/netcoreapp3.1/Lab4.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Lab4/obj/Debug/netcoreapp3.1/Lab4.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Lab4/obj/Debug/netcoreapp3.1/Lab4.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab4/tpl/Async.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab4/tpl/Async.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab4/tpl/TaskMechanism.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab4/tpl/TaskMechanism.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab4/parser/Parser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab4/parser/Parser.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab4/tpl/Callbacks.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab4/tpl/Callbacks.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,12 +51,12 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Lab4/download/download.html" />
-        <option value="$PROJECT_DIR$/Lab4/parser/Parser.cs" />
-        <option value="$PROJECT_DIR$/Lab4/tpl/Callbacks.cs" />
         <option value="$PROJECT_DIR$/Lab4/tpl/Async.cs" />
         <option value="$PROJECT_DIR$/Lab4/domain/State.cs" />
         <option value="$PROJECT_DIR$/Lab4/tpl/TaskMechanism.cs" />
+        <option value="$PROJECT_DIR$/Lab4/parser/Parser.cs" />
         <option value="$PROJECT_DIR$/Lab4/Program.cs" />
+        <option value="$PROJECT_DIR$/Lab4/tpl/Callbacks.cs" />
       </list>
     </option>
   </component>
@@ -108,7 +107,8 @@
       <updated>1605020003399</updated>
       <workItem from="1605020011838" duration="23325000" />
       <workItem from="1605099931471" duration="215000" />
-      <workItem from="1605346800813" duration="9479000" />
+      <workItem from="1605346800813" duration="9684000" />
+      <workItem from="1605639039622" duration="1435000" />
     </task>
     <servers />
   </component>
@@ -133,26 +133,26 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1238" height="491" key="GridCell.Tab.0.bottom" timestamp="1605365901278">
-      <screen x="0" y="23" width="1280" height="712" />
+    <state width="1238" height="180" key="GridCell.Tab.0.bottom" timestamp="1605643040936">
+      <screen x="0" y="23" width="1280" height="709" />
     </state>
-    <state width="1238" height="493" key="GridCell.Tab.0.bottom/0.23.1280.709@0.23.1280.709" timestamp="1605352949110" />
-    <state width="1238" height="491" key="GridCell.Tab.0.bottom/0.23.1280.712@0.23.1280.712" timestamp="1605365901278" />
-    <state width="1238" height="491" key="GridCell.Tab.0.center" timestamp="1605365901277">
-      <screen x="0" y="23" width="1280" height="712" />
+    <state width="1238" height="180" key="GridCell.Tab.0.bottom/0.23.1280.709@0.23.1280.709" timestamp="1605643040936" />
+    <state width="1238" height="491" key="GridCell.Tab.0.bottom/0.23.1280.712@0.23.1280.712" timestamp="1605366102357" />
+    <state width="1238" height="180" key="GridCell.Tab.0.center" timestamp="1605643040935">
+      <screen x="0" y="23" width="1280" height="709" />
     </state>
-    <state width="1238" height="493" key="GridCell.Tab.0.center/0.23.1280.709@0.23.1280.709" timestamp="1605352949109" />
-    <state width="1238" height="491" key="GridCell.Tab.0.center/0.23.1280.712@0.23.1280.712" timestamp="1605365901277" />
-    <state width="1238" height="491" key="GridCell.Tab.0.left" timestamp="1605365901276">
-      <screen x="0" y="23" width="1280" height="712" />
+    <state width="1238" height="180" key="GridCell.Tab.0.center/0.23.1280.709@0.23.1280.709" timestamp="1605643040935" />
+    <state width="1238" height="491" key="GridCell.Tab.0.center/0.23.1280.712@0.23.1280.712" timestamp="1605366102355" />
+    <state width="1238" height="180" key="GridCell.Tab.0.left" timestamp="1605643040935">
+      <screen x="0" y="23" width="1280" height="709" />
     </state>
-    <state width="1238" height="493" key="GridCell.Tab.0.left/0.23.1280.709@0.23.1280.709" timestamp="1605352949108" />
-    <state width="1238" height="491" key="GridCell.Tab.0.left/0.23.1280.712@0.23.1280.712" timestamp="1605365901276" />
-    <state width="1238" height="491" key="GridCell.Tab.0.right" timestamp="1605365901277">
-      <screen x="0" y="23" width="1280" height="712" />
+    <state width="1238" height="180" key="GridCell.Tab.0.left/0.23.1280.709@0.23.1280.709" timestamp="1605643040935" />
+    <state width="1238" height="491" key="GridCell.Tab.0.left/0.23.1280.712@0.23.1280.712" timestamp="1605366102354" />
+    <state width="1238" height="180" key="GridCell.Tab.0.right" timestamp="1605643040936">
+      <screen x="0" y="23" width="1280" height="709" />
     </state>
-    <state width="1238" height="493" key="GridCell.Tab.0.right/0.23.1280.709@0.23.1280.709" timestamp="1605352949109" />
-    <state width="1238" height="491" key="GridCell.Tab.0.right/0.23.1280.712@0.23.1280.712" timestamp="1605365901277" />
+    <state width="1238" height="180" key="GridCell.Tab.0.right/0.23.1280.709@0.23.1280.709" timestamp="1605643040936" />
+    <state width="1238" height="491" key="GridCell.Tab.0.right/0.23.1280.712@0.23.1280.712" timestamp="1605366102356" />
     <state width="1238" height="245" key="GridCell.Tab.1.bottom" timestamp="1605097617968">
       <screen x="0" y="23" width="1280" height="709" />
     </state>

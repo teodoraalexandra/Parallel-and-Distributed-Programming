@@ -12,6 +12,7 @@ namespace Lab4.parser
                          "Host: " + hostname + "\r\n" +
                          "User-Agent: PostmanRuntime/7.26.5\r\n" +
                          "Accept: */*\r\n" +
+                         "Accept-Charset: ASCII\r\n" +
                          "Accept-Encoding: gzip, deflate, br\r\n" +
                          "Connection: keep-alive\r\n\r\n";
             return result;
