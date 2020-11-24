@@ -1,0 +1,17 @@
+Performance for polynomials with 4 coefficients:
+(1) O(n2) algorithm - sequential form: 1 ms
+(2) The Karatsuba algorithm - sequential form: 1 ms
+(3) O(n2) algorithm - parallelize form: 14 ms
+(4) The Karatsuba algorithm - parallelize form: 11 ms
+
+Performance for polynomials with 16 coefficients:
+(1) O(n2) algorithm - sequential form: 5 ms
+(2) The Karatsuba algorithm - sequential form: 5 ms
+(3) O(n2) algorithm - parallelize form: 20 ms
+(4) The Karatsuba algorithm - parallelize form: 34 ms
+
+Performance for polynomials with 64 coefficients:
+(1) O(n2) algorithm - sequential form: 13 ms
+(2) The Karatsuba algorithm - sequential form: 13 ms
+(3) O(n2) algorithm - parallelize form: 18 ms
+(4) The Karatsuba algorithm - parallelize form: 229 ms
