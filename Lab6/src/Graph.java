@@ -15,6 +15,12 @@ class Graph {
         this.numberOfEdges = 0;
     }
 
+    Graph(int numberOfVertices, int numberOfEdges, int[][] graph) {
+        this.numberOfVertices = numberOfVertices;
+        this.numberOfEdges = numberOfEdges;
+        this.graph = graph;
+    }
+
     void readGraph() throws FileNotFoundException {
         File file = new File(this.fileName);
         Scanner scanner = new Scanner(file);

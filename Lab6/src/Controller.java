@@ -39,6 +39,7 @@ class Controller  {
                 if(G[solution.get(k)][i] == 1 && !exists(i, solution)) {
                     solution.add(i);
                     backTracking(solution, k + 1, n);
+                    solution.add(-1);
                 }
             }
         }
@@ -57,6 +58,7 @@ class Controller  {
                     boolean init = false;
                     if (k < LEVEL) {
                         threadBackTracking(solution, k + 1, n);
+                        solution.add(-1);
                     } else {
                         thread = new Thread(() -> backTracking(solution, k + 1, n));
                         init = true;
@@ -76,5 +78,14 @@ class Controller  {
 
     boolean isHasSolution() {
         return hasSolution;
+    }
+
+    List<Integer> printSolution() {
+        List<Integer> result = new ArrayList<>();
+        for (Integer i: this.solution) {
+            if (i != -1)
+                result.add(i);
+        }
+        return result;
     }
 }
