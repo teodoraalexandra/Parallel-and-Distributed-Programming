@@ -23,12 +23,13 @@ public class Polynomial implements Serializable {
         int max = 10;
 
         for (int i = 0; i < size; i++) {
-            coefficients[i] = rnd.nextInt(max - min) + min;
+            /*coefficients[i] = rnd.nextInt(max - min) + min;
             if(i == size - 1) {
                 while(coefficients[i] == 0) {
                     coefficients[i] = rnd.nextInt(max - min) + min;
                 }
-            }
+            }*/
+            coefficients[i] = i;
         }
     }
 

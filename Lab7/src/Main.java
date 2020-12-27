@@ -6,11 +6,17 @@ import java.util.concurrent.ExecutionException;
 public class Main {
 
     private static Polynomial ComputeFinalResult(Polynomial[] results) {
-        Polynomial result = new Polynomial(results[0].degree);
+        Polynomial result = new Polynomial(results[0].coefficients.length * 2 - 1);
 
-        for (int i = 0; i < result.size; i++)
-            for (int j = 0; j < results.length; j++)
-                result.coefficients[i] += results[j].coefficients[i];
+        // Multiply two polynomials term by term
+        // Take ever term of first polynomial
+        for (int i = 0; i < results[0].coefficients.length; i++) {
+            // Multiply the current term of first polynomial
+            // with every term of second polynomial.
+            for (int j = 0; j < results[1].coefficients.length; j++) {
+                result.coefficients[i + j] += results[0].coefficients[i] * results[1].coefficients[j];
+            }
+        }
 
         return result;
     }
@@ -84,30 +90,28 @@ public class Main {
         MPI.COMM_WORLD.Send(result, 1, result.coefficients.length, MPI.INT, 0, 0);
     }
 
-    private static void MPIKaratsubaMaster(Polynomial polynomial1, Polynomial polynomial2) throws ExecutionException, InterruptedException {
+    private static void MPIKaratsubaMaster(Polynomial polynomial1, Polynomial polynomial2, int size) throws ExecutionException, InterruptedException {
         Polynomial result = new Polynomial(polynomial1.degree * 2);
-        int[] mul = new int[0];
-        int[] mul2 = new int[MPI.COMM_WORLD.Size()];
-        int[] coefs = new int[100];
-        if (MPI.COMM_WORLD.Size() == 1)
-        {
+
+        if (MPI.COMM_WORLD.Size() == 1) {
             result = PolynomialOperations.AsynchronousKaratsubaMultiply(polynomial1, polynomial2);
         }
-        else
-        {
+        else {
             //TODO
             MPI.COMM_WORLD.Send(0, 1, 1, MPI.INT, 1, 0);
             MPI.COMM_WORLD.Send(polynomial1.getCoefficients(), 1, polynomial1.getCoefficients().length, MPI.INT, 1, 0);
             MPI.COMM_WORLD.Send(polynomial2.getCoefficients(), 1, polynomial2.getCoefficients().length, MPI.INT, 1, 0);
 
-            if (MPI.COMM_WORLD.Size() == 2)
+            /*if (MPI.COMM_WORLD.Size() == 2)
                 MPI.COMM_WORLD.Send(mul, 1, 32, MPI.INT, 1, 0);
             else
                 MPI.COMM_WORLD.Send(mul2, 1, 32, MPI.INT, 1, 0);
 
             MPI.COMM_WORLD.Recv(coefs, 1, 32, MPI.INT, 1, 0);
-            result.coefficients = coefs;
+            result.coefficients = coefs;*/
         }
+
+        System.out.println("MPI Karatsuba: " + result.toString());
     }
 
     public static void MPIKaratsubaWorker() throws ExecutionException, InterruptedException {
@@ -126,19 +130,22 @@ public class Main {
             // Master process
             int totalProcessors = MPI.COMM_WORLD.Size() - 1;
 
-            int polynomialsLength = 7;
+            int polynomialsLength = 3;
             Polynomial polynomial1 = new Polynomial(polynomialsLength);
             polynomial1.generateRandomPolynomial();
             Thread.sleep(500);
             Polynomial polynomial2 = new Polynomial(polynomialsLength);
             polynomial2.generateRandomPolynomial();
+            System.out.println("Poly 1: " + polynomial1.toString());
+            System.out.println("Poly 2: " + polynomial2.toString());
 
             int size = polynomial1.size;
             MPIMultiplicationMaster(polynomial1, polynomial2, size);
-            //MPIKaratsubaMaster(polynomial1, polynomial2);
+            MPIKaratsubaMaster(polynomial1, polynomial2, size);
         } else {
             // Child process
-            MPIMultiplicationWorker();
+            System.out.println("Child process");
+            //MPIMultiplicationWorker();
             //MPIKaratsubaWorker();
         }
 
