@@ -60,7 +60,7 @@ class PolynomialOperations {
         }
 
         //Recursively call method on smaller arrays and construct the low and high parts of the product
-        ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10); //TODO: hardcoded
+        ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
         Callable<int[]> t1 = () -> AsynchronousKaratsubaMultiplyRecursive(coefficients1Low, coefficients2Low);
         Callable<int[]> t2 = () -> AsynchronousKaratsubaMultiplyRecursive(coefficients1High, coefficients2High);
         Callable<int[]> t3 = () ->  AsynchronousKaratsubaMultiplyRecursive(coefficients1LowHigh, coefficients2LowHigh);
@@ -93,27 +93,18 @@ class PolynomialOperations {
     }
 
     static void MPIKaratsubaMultiply() throws ExecutionException, InterruptedException {
-        int from = 0;
-        int[] coefficients1 = new int[0];
-        int[] coefficients2 = new int[0];
-        int[] sendTo = new int[0];
+        Object[] results = new Object[MPI.COMM_WORLD.Size() + 1];
+        Polynomial[] polynomials = new Polynomial[MPI.COMM_WORLD.Size() + 1];
 
-        //TODO
-        MPI.COMM_WORLD.Recv(from, 0, 1, MPI.INT, MPI.ANY_SOURCE, 0);
-        MPI.COMM_WORLD.Recv(coefficients1, 0, 1, MPI.INT, MPI.ANY_SOURCE, 0);
-        MPI.COMM_WORLD.Recv(coefficients2, 0, 1, MPI.INT, MPI.ANY_SOURCE, 0);
-        MPI.COMM_WORLD.Recv(sendTo, 0, 1, MPI.INT, MPI.ANY_SOURCE, 0);
+        MPI.COMM_WORLD.Recv(results, 0, 1, MPI.OBJECT, 0, 0);
+        polynomials[0] = (Polynomial) results[0];
+        MPI.COMM_WORLD.Recv(results, 0, 1, MPI.OBJECT, 0, 0);
+        polynomials[1] = (Polynomial) results[0];
+
+        int[] coefficients1 = polynomials[0].getCoefficients();
+        int[] coefficients2 = polynomials[1].getCoefficients();
 
         int[] product = new int[2 * coefficients1.length];
-
-        //Handle the base case where the polynomial has only one coefficient
-        if (coefficients1.length == 1) {
-            product[0] = coefficients1[0] * coefficients2[0];
-
-            //TODO
-            MPI.COMM_WORLD.Send(product, 1, product.length, MPI.INT, from, 0);
-            return;
-        }
 
         int halfArraySize = coefficients1.length / 2;
 
@@ -140,102 +131,9 @@ class PolynomialOperations {
         //Recursively call method on smaller arrays and construct the low and high parts of the product
         int[] productLow = new int[0], productHigh = new int[0], productLowHigh = new int[0];
 
-        if (sendTo.length == 0) {
-            productLow = AsynchronousKaratsubaMultiplyRecursive(coefficients1Low, coefficients2Low);
-            productHigh = AsynchronousKaratsubaMultiplyRecursive(coefficients1High, coefficients2High);
-            productLowHigh = AsynchronousKaratsubaMultiplyRecursive(coefficients1LowHigh, coefficients2LowHigh);
-        }
-        else if (sendTo.length == 1) {
-            int[] mul = new int[0];
-            //TODO
-            MPI.COMM_WORLD.Send(MPI.COMM_WORLD.Rank(), 1, 32, MPI.INT, sendTo[0], 0);
-            MPI.COMM_WORLD.Send(coefficients1Low, 1, coefficients1Low.length, MPI.INT, sendTo[0], 0);
-            MPI.COMM_WORLD.Send(coefficients2Low, 1, coefficients2Low.length, MPI.INT, sendTo[0], 0);
-            MPI.COMM_WORLD.Send(mul, 1, mul.length, MPI.INT, sendTo[0], 0);
-
-            productHigh = AsynchronousKaratsubaMultiplyRecursive(coefficients1High, coefficients2High);
-            productLowHigh = AsynchronousKaratsubaMultiplyRecursive(coefficients1LowHigh, coefficients2LowHigh);
-
-            MPI.COMM_WORLD.Recv(productLow, 1, 32, MPI.INT, sendTo[0], 0);
-        }
-        else if (sendTo.length == 2)
-        {
-            int[] mul = new int[0];
-            //TODO
-            MPI.COMM_WORLD.Send(MPI.COMM_WORLD.Rank(), 1, 32, MPI.INT, sendTo[0], 0);
-            MPI.COMM_WORLD.Send(coefficients1Low, 1, coefficients1Low.length, MPI.INT, sendTo[0], 0);
-            MPI.COMM_WORLD.Send(coefficients2Low, 1, coefficients2Low.length, MPI.INT, sendTo[0], 0);
-            MPI.COMM_WORLD.Send(mul, 1, mul.length, MPI.INT, sendTo[0], 0);
-
-            MPI.COMM_WORLD.Send(MPI.COMM_WORLD.Rank(), 1, 32, MPI.INT, sendTo[1], 0);
-            MPI.COMM_WORLD.Send(coefficients1High, 1, coefficients1High.length, MPI.INT, sendTo[1], 0);
-            MPI.COMM_WORLD.Send(coefficients2High, 1, coefficients2High.length, MPI.INT, sendTo[1], 0);
-            MPI.COMM_WORLD.Send(mul, 1, mul.length, MPI.INT, sendTo[1], 0);
-
-            productLowHigh = AsynchronousKaratsubaMultiplyRecursive(coefficients1LowHigh, coefficients2LowHigh);
-
-            MPI.COMM_WORLD.Recv(productLow, 1, 32, MPI.INT, sendTo[0], 0);
-            MPI.COMM_WORLD.Recv(productHigh, 1, 32, MPI.INT, sendTo[1], 0);
-        }
-        else if(sendTo.length == 3)
-        {
-            int[] mul = new int[0];
-            //TODO
-            MPI.COMM_WORLD.Send(MPI.COMM_WORLD.Rank(), 1, 32, MPI.INT, sendTo[0], 0);
-            MPI.COMM_WORLD.Send(coefficients1Low, 1, coefficients1Low.length, MPI.INT, sendTo[0], 0);
-            MPI.COMM_WORLD.Send(coefficients2Low, 1, coefficients2Low.length, MPI.INT, sendTo[0], 0);
-            MPI.COMM_WORLD.Send(mul, 1, mul.length, MPI.INT, sendTo[0], 0);
-
-            MPI.COMM_WORLD.Send(MPI.COMM_WORLD.Rank(), 1, 32, MPI.INT, sendTo[1], 0);
-            MPI.COMM_WORLD.Send(coefficients1High, 1, coefficients1High.length, MPI.INT, sendTo[1], 0);
-            MPI.COMM_WORLD.Send(coefficients2High, 1, coefficients2High.length, MPI.INT, sendTo[1], 0);
-            MPI.COMM_WORLD.Send(mul, 1, mul.length, MPI.INT, sendTo[1], 0);
-
-            MPI.COMM_WORLD.Send(MPI.COMM_WORLD.Rank(), 1, 32, MPI.INT, sendTo[2], 0);
-            MPI.COMM_WORLD.Send(coefficients1LowHigh, 1, coefficients1LowHigh.length, MPI.INT, sendTo[2], 0);
-            MPI.COMM_WORLD.Send(coefficients2LowHigh, 1, coefficients2LowHigh.length, MPI.INT, sendTo[2], 0);
-            MPI.COMM_WORLD.Send(mul, 1, mul.length, MPI.INT, sendTo[2], 0);
-
-            MPI.COMM_WORLD.Recv(productLow, 1, 32, MPI.INT, sendTo[0], 0);
-            MPI.COMM_WORLD.Recv(productHigh, 1, 32, MPI.INT, sendTo[1], 0);
-            MPI.COMM_WORLD.Recv(productLowHigh, 1, 32, MPI.INT, sendTo[2], 0);
-        }
-        else
-        {
-            List<Integer> auxSendTo = new ArrayList<>();
-            for (int i = 3; i < sendTo.length; i++) {
-                auxSendTo.add(sendTo[i]);
-            }
-            int auxLength = auxSendTo.size() / 3;
-
-            //TODO
-            MPI.COMM_WORLD.Send(MPI.COMM_WORLD.Rank(), 1, 32, MPI.INT, sendTo[0], 0);
-            MPI.COMM_WORLD.Send(coefficients1Low, 1, coefficients1Low.length, MPI.INT, sendTo[0], 0);
-            MPI.COMM_WORLD.Send(coefficients2Low, 1, coefficients2Low.length, MPI.INT, sendTo[0], 0);
-            MPI.COMM_WORLD.Send(auxSendTo.get(auxLength), 1, 32, MPI.INT, sendTo[0], 0);
-
-            MPI.COMM_WORLD.Send(MPI.COMM_WORLD.Rank(), 1, 32, MPI.INT, sendTo[1], 0);
-            MPI.COMM_WORLD.Send(coefficients1High, 1, coefficients1High.length, MPI.INT, sendTo[1], 0);
-            MPI.COMM_WORLD.Send(coefficients2High, 1, coefficients2High.length, MPI.INT, sendTo[1], 0);
-            List<Integer> auxSendTo2 = new ArrayList<>();
-            for (int i = auxLength; i < auxSendTo.size(); i++) {
-                auxSendTo2.add(auxSendTo.get(i));
-            }
-            MPI.COMM_WORLD.Send(auxSendTo2.get(auxLength), 1, 32, MPI.INT, sendTo[1], 0);
-
-            MPI.COMM_WORLD.Send(MPI.COMM_WORLD.Rank(), 1, 32, MPI.INT, sendTo[2], 0);
-            MPI.COMM_WORLD.Send(coefficients1LowHigh, 1, coefficients1LowHigh.length, MPI.INT, sendTo[2], 0);
-            MPI.COMM_WORLD.Send(coefficients2LowHigh, 1, coefficients2LowHigh.length, MPI.INT, sendTo[2], 0);
-            List<Integer> auxSendTo3= new ArrayList<>();
-            for (int i = 2 * auxLength; i < auxSendTo.size(); i++) {
-                auxSendTo3.add(auxSendTo.get(i));
-            }
-            MPI.COMM_WORLD.Send(auxSendTo3, 1, 32, MPI.INT, sendTo[2], 0);
-
-            MPI.COMM_WORLD.Recv(productLow, 1, 32, MPI.INT, sendTo[0], 0);
-            MPI.COMM_WORLD.Recv(productHigh, 1, 32, MPI.INT, sendTo[1], 0);
-            MPI.COMM_WORLD.Recv(productLowHigh, 1, 32, MPI.INT, sendTo[2], 0);
-        }
+        productLow = AsynchronousKaratsubaMultiplyRecursive(coefficients1Low, coefficients2Low);
+        productHigh = AsynchronousKaratsubaMultiplyRecursive(coefficients1High, coefficients2High);
+        productLowHigh = AsynchronousKaratsubaMultiplyRecursive(coefficients1LowHigh, coefficients2LowHigh);
 
         //Construct the middle portion of the product
         int[] productMiddle = new int[coefficients1.length];
@@ -250,7 +148,10 @@ class PolynomialOperations {
             product[halfSizeIndex + middleOffset] += productMiddle[halfSizeIndex];
         }
 
-        //TODO
-        MPI.COMM_WORLD.Send(product, 1, product.length, MPI.INT, from, 0);
+        Object[] resultObj = new Object[1];
+        Polynomial polynomial = new Polynomial(product);
+        resultObj[0] = polynomial;
+
+        MPI.COMM_WORLD.Issend(resultObj, 0, 1, MPI.OBJECT, 0, 0);
     }
 }

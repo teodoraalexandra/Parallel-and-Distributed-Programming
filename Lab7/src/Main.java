@@ -2,7 +2,6 @@ import mpi.MPI;
 
 import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.locks.ReentrantLock;
 
 
 public class Main {
@@ -47,11 +46,19 @@ public class Main {
 
                 MPI.COMM_WORLD.Issend(poly1, 0, 1, MPI.OBJECT, i, 0);
                 MPI.COMM_WORLD.Issend(poly2, 0, 1, MPI.OBJECT, i, 0);
-                //todo: only for multiple cores
                 MPI.COMM_WORLD.Issend(beginArray, 0, 1, MPI.INT, i, 0);
                 MPI.COMM_WORLD.Issend(endArray, 0, 1, MPI.INT, i, 0);
-                //System.out.println("Finish send master");
             }
+        }
+
+        if (n == 1) {
+            Object[] poly1 = new Object[1];
+            Object[] poly2 = new Object[1];
+            poly1[0] = polynomial1;
+            poly2[0] = polynomial2;
+
+            MPI.COMM_WORLD.Issend(poly1, 0, 1, MPI.OBJECT, 0, 0);
+            MPI.COMM_WORLD.Issend(poly2, 0, 1, MPI.OBJECT, 0, 0);
         }
 
         Object[] results = new Object[n + 1];
@@ -98,8 +105,6 @@ public class Main {
         MPI.COMM_WORLD.Recv(results, 0, 1, MPI.OBJECT, 0, 0);
         polynomials[1] = (Polynomial) results[0];
 
-        //System.out.println("CHILD: " + polynomials[0] + " " + polynomials[1]);
-
         int[] beginArray = new int[1];
         MPI.COMM_WORLD.Recv(beginArray, 0, 1, MPI.INT, 0, 0);
         int begin = beginArray[0];
@@ -118,24 +123,39 @@ public class Main {
     }
 
     private static void MPIKaratsubaMaster(Polynomial polynomial1, Polynomial polynomial2, int size) throws ExecutionException, InterruptedException {
-        Polynomial result = new Polynomial(polynomial1.degree * 2);
+        Polynomial result = new Polynomial(polynomial1.degree * 2 + 1);
 
         if (MPI.COMM_WORLD.Size() == 1) {
             result = PolynomialOperations.AsynchronousKaratsubaMultiply(polynomial1, polynomial2);
         }
         else {
-            //TODO
-            MPI.COMM_WORLD.Send(0, 1, 1, MPI.INT, 1, 0);
-            MPI.COMM_WORLD.Send(polynomial1.getCoefficients(), 1, polynomial1.getCoefficients().length, MPI.INT, 1, 0);
-            MPI.COMM_WORLD.Send(polynomial2.getCoefficients(), 1, polynomial2.getCoefficients().length, MPI.INT, 1, 0);
+            for (int i = 0; i < MPI.COMM_WORLD.Size(); i++) {
+                if (i != 0) {
+                    Object[] poly1 = new Object[1];
+                    Object[] poly2 = new Object[1];
+                    poly1[0] = polynomial1;
+                    poly2[0] = polynomial2;
 
-            /*if (MPI.COMM_WORLD.Size() == 2)
-                MPI.COMM_WORLD.Send(mul, 1, 32, MPI.INT, 1, 0);
-            else
-                MPI.COMM_WORLD.Send(mul2, 1, 32, MPI.INT, 1, 0);
+                    MPI.COMM_WORLD.Issend(poly1, 0, 1, MPI.OBJECT, i, 0);
+                    MPI.COMM_WORLD.Issend(poly2, 0, 1, MPI.OBJECT, i, 0);
+                }
+            }
 
-            MPI.COMM_WORLD.Recv(coefs, 1, 32, MPI.INT, 1, 0);
-            result.coefficients = coefs;*/
+            int n = MPI.COMM_WORLD.Size();
+            int[] finalResult = new int[PolynomialOperations.result.length];
+            for (int i = 0; i < n; i++) {
+                if (i != 0) {
+                    Object[] resultsWorker = new Object[n + 1];
+                    Polynomial[] polynomialsWorker = new Polynomial[n + 1];
+
+                    MPI.COMM_WORLD.Recv(resultsWorker, 0, 1, MPI.OBJECT, i, 0);
+                    polynomialsWorker[i] = (Polynomial) resultsWorker[0];
+
+                    finalResult = polynomialsWorker[i].getCoefficients();
+                    break;
+                }
+            }
+            result = new Polynomial(finalResult);
         }
 
         System.out.println("MPI Karatsuba: " + result.toString());
@@ -164,13 +184,13 @@ public class Main {
 
         if (MPI.COMM_WORLD.Rank() == 0) {
             // Master process
-            MPIMultiplicationMaster(polynomial1, polynomial2, size);
-            //MPIKaratsubaMaster(polynomial1, polynomial2, size);
+            //MPIMultiplicationMaster(polynomial1, polynomial2, size);
+            MPIKaratsubaMaster(polynomial1, polynomial2, size);
         } else {
             // Child process
             //System.out.println("Child process...");
-            MPIMultiplicationWorker();
-            //MPIKaratsubaWorker();
+            //MPIMultiplicationWorker();
+            MPIKaratsubaWorker();
         }
 
         MPI.Finalize();
