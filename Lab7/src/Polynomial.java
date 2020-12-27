@@ -17,6 +17,12 @@ public class Polynomial implements Serializable {
     Polynomial() {
     }
 
+    Polynomial(int[] coefficients) {
+        this.coefficients = coefficients;
+        size = coefficients.length;
+        degree = coefficients.length - 1;
+    }
+
     void generateRandomPolynomial() {
         Random rnd = new Random();
         int min = -10;

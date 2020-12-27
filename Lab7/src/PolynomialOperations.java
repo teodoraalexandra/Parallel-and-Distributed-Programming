@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.concurrent.*;
 import mpi.*;
 import java.util.ArrayList;
@@ -5,16 +6,18 @@ import java.util.List;
 
 
 class PolynomialOperations {
-    static Polynomial MPIMultiply(Polynomial polynomial1, Polynomial polynomial2, int begin, int end) {
-        Polynomial result;
-        int maxDegree = Math.max(polynomial1.degree, polynomial2.degree);
-        result = new Polynomial(maxDegree * 2);
+    static int[] result;
 
-        for (int i = begin; i < end; i++)
-            for (int j = 0; j < polynomial2.size; j++)
-                result.coefficients[i + j] += polynomial1.coefficients[i] * polynomial2.coefficients[j];
+    static void MPIMultiply(Polynomial polynomial1, Polynomial polynomial2, int begin, int end) {
+        int[] poly1 = polynomial1.getCoefficients();
+        int[] poly2 = polynomial2.getCoefficients();
 
-        return result;
+        for (int i = begin; i < end; i++) {
+            // Find all the pairs that we add to obtain the value of a result coefficient
+            for (int j = 0; j < poly2.length; j++) {
+                result[i + j] += poly1[i] * poly2[j];
+            }
+        }
     }
 
     static Polynomial AsynchronousKaratsubaMultiply(Polynomial p1, Polynomial p2) throws ExecutionException, InterruptedException {
