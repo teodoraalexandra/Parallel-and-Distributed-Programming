@@ -1,8 +1,5 @@
-import java.util.Arrays;
 import java.util.concurrent.*;
 import mpi.*;
-import java.util.ArrayList;
-import java.util.List;
 
 
 class PolynomialOperations {
@@ -31,8 +28,7 @@ class PolynomialOperations {
         int[] product = new int[2 * coefficients1.length];
 
         //Handle the base case where the polynomial has only one coefficient
-        if (coefficients1.length == 1)
-        {
+        if (coefficients1.length == 1) {
             product[0] = coefficients1[0] * coefficients2[0];
             return product;
         }

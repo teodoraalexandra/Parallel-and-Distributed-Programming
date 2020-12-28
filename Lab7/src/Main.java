@@ -1,6 +1,5 @@
 import mpi.MPI;
 
-import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 
 
@@ -22,6 +21,8 @@ public class Main {
     }
 
     private static void MPIMultiplicationMaster(Object polynomial1, Object polynomial2, int size) {
+        long startTimeMultiplication = System.currentTimeMillis();
+
         int n = MPI.COMM_WORLD.Size();
         int begin = 0;
         int end = 0;
@@ -73,7 +74,8 @@ public class Main {
             }
 
             Polynomial result = ComputeFinalResult(polynomials);
-            System.out.println("MPI Multiplication: " + result.toString());
+            long endTimeMultiplication = System.currentTimeMillis();
+            System.out.println("MPI Multiplication: " + result.toString() + ". TIME: " + (endTimeMultiplication - startTimeMultiplication));
         } else {
             int[] finalResult = new int[PolynomialOperations.result.length];
             for (int i = 0; i < n; i++) {
@@ -91,7 +93,8 @@ public class Main {
                 }
             }
             Polynomial result = new Polynomial(finalResult);
-            System.out.println("MPI Multiplication: " + result.toString());
+            long endTimeMultiplication = System.currentTimeMillis();
+            System.out.println("MPI Multiplication: " + result.toString() + ". TIME: " + (endTimeMultiplication - startTimeMultiplication));
         }
     }
 
@@ -123,6 +126,8 @@ public class Main {
     }
 
     private static void MPIKaratsubaMaster(Polynomial polynomial1, Polynomial polynomial2, int size) throws ExecutionException, InterruptedException {
+        long startTimeKaratsuba = System.currentTimeMillis();
+
         Polynomial result = new Polynomial(polynomial1.degree * 2 + 1);
 
         if (MPI.COMM_WORLD.Size() == 1) {
@@ -158,7 +163,8 @@ public class Main {
             result = new Polynomial(finalResult);
         }
 
-        System.out.println("MPI Karatsuba: " + result.toString());
+        long endTimeKaratsuba = System.currentTimeMillis();
+        System.out.println("MPI Karatsuba: " + result.toString() + ". TIME: " + (endTimeKaratsuba - startTimeKaratsuba));
     }
 
     public static void MPIKaratsubaWorker() throws ExecutionException, InterruptedException {
@@ -178,18 +184,18 @@ public class Main {
         polynomial1.generateRandomPolynomial();
         Polynomial polynomial2 = new Polynomial(polynomialsLength);
         polynomial2.generateRandomPolynomial();
-        //System.out.println("Poly 1: " + polynomial1.toString());
-        //System.out.println("Poly 2: " + polynomial2.toString());
         int size = polynomial1.size;
 
         if (MPI.COMM_WORLD.Rank() == 0) {
             // Master process
-            //MPIMultiplicationMaster(polynomial1, polynomial2, size);
+            System.out.println("Poly 1: " + polynomial1.toString());
+            System.out.println("Poly 2: " + polynomial2.toString());
+
+            MPIMultiplicationMaster(polynomial1, polynomial2, size);
             MPIKaratsubaMaster(polynomial1, polynomial2, size);
         } else {
             // Child process
-            //System.out.println("Child process...");
-            //MPIMultiplicationWorker();
+            MPIMultiplicationWorker();
             MPIKaratsubaWorker();
         }
 
