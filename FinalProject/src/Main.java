@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import java.util.*;
+import mpi.MPI;
 
 
 public class Main {
@@ -21,6 +22,8 @@ public class Main {
     private static final int numberOfTrials = 10;
 
     public static void main(String[] args) throws Exception {
+        MPI.Init(args);
+
         List<Integer> times = new ArrayList<>();
 
         for (int i = 0; i < numberOfTrials; i ++) {
@@ -62,5 +65,7 @@ public class Main {
                 .average();
 
         System.out.println("Thread performance: " + (average.isPresent() ? average.getAsDouble() : 0));
+
+        MPI.Finalize();
     }
 }
