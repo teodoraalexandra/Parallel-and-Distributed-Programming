@@ -22,4 +22,22 @@ executor.shutdown();
 executor.awaitTermination(50, TimeUnit.SECONDS); 
 ```
 #### MPI
+For the MPI algorithm, we split the work into master and workers. We suppose that the first process (0) is the master and the rest of the processes are the workers. The master process will split the x array (width coordinates) into n parts, where n represents the number of workers. Each worker receives an array of x-es and run the addPoint function for every y (height coordinates). Lines are being computed now, so the master should see them for being able to draw them on the original image.
 ## Performance measurements
+THREADS
+
+| Threads       | 5             | 8             | 10            |
+| ------------- | ------------- | ------------- | ------------- | 
+| Image: line   |               |               |               |
+| Image: lines  |               |               |               |
+| Image: box    |               |               |               |
+| Image: vase   |               |               |               |           
+
+MPI
+
+| Processes     | 4             | 6             | 8             |
+| ------------- | ------------- | ------------- | ------------- | 
+| Image: line   |               |               |               |
+| Image: lines  |               |               |               |
+| Image: box    |               |               |               |
+| Image: vase   |               |               |               |

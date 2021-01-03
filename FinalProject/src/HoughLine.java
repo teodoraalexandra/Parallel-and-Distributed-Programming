@@ -1,7 +1,8 @@
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
 
-class HoughLine {
+class HoughLine implements Serializable {
     private double theta;
     private double r;
 
@@ -41,5 +42,13 @@ class HoughLine {
                 }
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return "HoughLine{" +
+                "theta=" + theta +
+                ", r=" + r +
+                '}';
     }
 }

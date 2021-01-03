@@ -1,26 +1,27 @@
 import java.awt.image.BufferedImage;
 import java.awt.*;
+import java.io.Serializable;
 import java.util.Vector;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 
-class HoughTransform extends Thread {
+class HoughTransform extends Thread implements Serializable {
     // Using maxTheta, work out the step 
-    private final double thetaStep = Math.PI / Main.maxTheta;
+    private static final double thetaStep = Math.PI / Main.maxTheta;
 
-    private int width, height;
-    private BufferedImage image;
-    private int[][] houghArray;
-    private float centerX, centerY; // the coordinates of the centre of the image
-    private int houghHeight;
-    private int doubleHeight;
-    private int numberOfPoints;
+    private static int width, height;
+    private static BufferedImage image;
+    private static int[][] houghArray;
+    private static float centerX, centerY; // the coordinates of the centre of the image
+    private static int houghHeight;
+    private static int doubleHeight;
+    private static int numberOfPoints;
 
     // Cache of values of sin and cos for different theta values
-    private double[] sinCache;
-    private double[] cosCache;
+    private static double[] sinCache;
+    private static double[] cosCache;
 
     HoughTransform(int width, int height, BufferedImage image) {
         this.width = width;
@@ -57,14 +58,14 @@ class HoughTransform extends Thread {
         // Find edge points and update the hough array
         ExecutorService executor = Executors.newFixedThreadPool(Main.numberOfThreads);
         for (int x = 0; x < image.getWidth(); x++) {
-            HoughTask task = new HoughTask(x, image, this);
+            HoughTask task = new HoughTask(x, image);
             executor.submit(task);
         }
         executor.shutdown();
         executor.awaitTermination(50, TimeUnit.SECONDS);
     }
 
-    void addPoint(int x, int y) {
+    static void addPoint(int x, int y, BufferedImage image) {
         // Find non-black pixels
         if ((image.getRGB(x, y) & 0x000000ff) == 0) {
             return;
@@ -86,7 +87,7 @@ class HoughTransform extends Thread {
         numberOfPoints++;
     }
 
-    Vector<HoughLine> getLines() {
+    static Vector<HoughLine> getLines() {
         Vector<HoughLine> lines = new Vector<HoughLine>(0);
         if (numberOfPoints == 0) return lines;
 
@@ -136,6 +137,7 @@ class HoughTransform extends Thread {
         return max;
     }
 
+    // Used for hough space
     BufferedImage getHoughArrayImage() {
         int max = getHighestValue();
         BufferedImage image = new BufferedImage(Main.maxTheta, doubleHeight, BufferedImage.TYPE_INT_ARGB);
