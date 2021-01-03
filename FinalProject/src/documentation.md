@@ -28,10 +28,10 @@ THREADS
 
 | Threads       | 5             | 8             | 10            |
 | ------------- | ------------- | ------------- | ------------- | 
-| Image: line   |               |               |               |
-| Image: lines  |               |               |               |
-| Image: box    |               |               |               |
-| Image: vase   |               |               |               |           
+| Image: line   | 445           | 409           | 419           |
+| Image: lines  | 412           | 449           | 417           |
+| Image: box    | 464           | 439           | 419           |
+| Image: vase   | 458           | 445           | 469           |           
 
 MPI
 

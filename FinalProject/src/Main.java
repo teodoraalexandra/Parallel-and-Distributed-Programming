@@ -12,7 +12,7 @@ import mpi.MPI;
 
 public class Main {
     static final int threshold = 30;
-    static final int numberOfThreads = 5;
+    static final int numberOfThreads = 10;
 
     // The size of the neighbourhood in which to search for other local maxima
     static final int neighbourhoodSize = 4;
@@ -82,8 +82,8 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         String fileNameInputImage = "images/vase.png";
-        houghMPI(args, fileNameInputImage);
-        //houghThreads(fileNameInputImage);
+        //houghMPI(args, fileNameInputImage);
+        houghThreads(fileNameInputImage);
     }
 
     static void houghMPI(String[] args, String fileNameInputImage) throws IOException {
