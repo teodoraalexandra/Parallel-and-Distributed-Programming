@@ -28,16 +28,16 @@ THREADS
 
 | Threads       | 5             | 8             | 10            |
 | ------------- | ------------- | ------------- | ------------- | 
-| Image: line   | 445              | 409              | 419              |
-| Image: lines  | 412              | 449              | 417              |
-| Image: box    | 464              | 439              | 419              |
-| Image: vase   | 458              | 445              |               |           
+| Image: line   | 445           | 409           | 419           |
+| Image: lines  | 412           | 449           | 417           |
+| Image: box    | 464           | 439           | 419           |
+| Image: vase   | 458           | 445           | 469           |           
 
 MPI
 
 | Processes     | 4             | 6             | 8             |
 | ------------- | ------------- | ------------- | ------------- | 
-| Image: line   |               |               |               |
-| Image: lines  |               |               |               |
-| Image: box    |               |               |               |
-| Image: vase   |               |               |               |
+| Image: line   | 174           | 232           | 224           |
+| Image: lines  | 186           | 192           | 155           |
+| Image: box    | 196           | 165           | 246           |
+| Image: vase   | 148           | 164           | 161           |

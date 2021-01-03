@@ -81,9 +81,9 @@ public class Main {
     }
 
     public static void main(String[] args) throws Exception {
-        String fileNameInputImage = "images/vase.png";
-        //houghMPI(args, fileNameInputImage);
-        houghThreads(fileNameInputImage);
+        String fileNameInputImage = "images/line.png";
+        houghMPI(args, fileNameInputImage);
+        //houghThreads(fileNameInputImage);
     }
 
     static void houghMPI(String[] args, String fileNameInputImage) throws IOException {

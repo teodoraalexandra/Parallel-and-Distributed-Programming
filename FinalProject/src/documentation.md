@@ -37,7 +37,7 @@ MPI
 
 | Processes     | 4             | 6             | 8             |
 | ------------- | ------------- | ------------- | ------------- | 
-| Image: line   |               |               |               |
-| Image: lines  |               |               |               |
-| Image: box    |               |               |               |
-| Image: vase   |               |               |               |
+| Image: line   | 174           | 232           | 224           |
+| Image: lines  | 186           | 192           | 155           |
+| Image: box    | 196           | 165           | 246           |
+| Image: vase   | 148           | 164           | 161           |
